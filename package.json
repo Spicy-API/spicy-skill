@@ -1,0 +1,49 @@
+{
+  "name": "@spicyapi/skill",
+  "version": "0.3.1",
+  "description": "Operate the SpicyAPI developer API from a coding agent: inspect live models and prices, create and wait for media tasks, upload inputs, retrieve results, and verify webhooks — through the official SDK, CLI, or MCP server.",
+  "type": "module",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Spicy-API/spicy-skill.git"
+  },
+  "homepage": "https://spicyapi.ai",
+  "bugs": {
+    "url": "https://github.com/Spicy-API/spicy-skill/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "engines": {
+    "node": ">=22.13.0"
+  },
+  "main": "./dist/src/skill/index.js",
+  "types": "./dist/src/skill/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/src/skill/index.d.ts",
+      "import": "./dist/src/skill/index.js"
+    }
+  },
+  "bin": {
+    "spicyapi-skill": "dist/src/cli.js"
+  },
+  "files": [
+    "dist/src",
+    "skills/spicyapi",
+    "README.md",
+    "SECURITY.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "npm run build && node --test dist/test/*.test.js"
+  },
+  "devDependencies": {
+    "@types/node": "26.4.0",
+    "prettier": "3.9.6",
+    "typescript": "5.9.3"
+  }
+}
