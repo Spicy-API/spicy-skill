@@ -52,30 +52,33 @@ agent to run real tasks; they do not conflict.
 ### Option 1: `npx skills add` (recommended)
 
 ```bash
-npx skills add https://spicyapi.ai/skill
+npx skills add Spicy-API/spicy-skill
 ```
 
-That is [`skills`](https://github.com/vercel-labs/skills), the installer most coding agents share.
-It asks which of them to install into — Claude Code, Codex, Cursor, OpenCode, Gemini CLI and many
-others — whether the install is for the current project or global, and whether to symlink or copy.
-Add `--agent claude-code` to skip the first question, `-g` to install for every project instead of
-only the current one, and `-y` to accept the defaults:
+That is [`skills`](https://github.com/vercel-labs/skills), the installer most coding agents share,
+reading this public repository. It asks which assistants to install into — Claude Code, Codex,
+Cursor, OpenCode, Gemini CLI and many others — whether the install is for the current project or
+global, and whether to symlink or copy. Add `--agent claude-code` to skip the first question, `-g`
+to install for every project instead of only the current one, and `-y` to accept the defaults:
 
 ```bash
-npx skills add https://spicyapi.ai/skill --agent claude-code
-npx skills add https://spicyapi.ai/skill --agent codex -g
+npx skills add Spicy-API/spicy-skill --agent claude-code
+npx skills add Spicy-API/spicy-skill --agent codex -g
 ```
 
 Things worth knowing:
 
-- **Keep `https://`.** Without it, `skills` reads `spicyapi.ai/skill` as a GitHub `owner/repo` and
-  fails with `Authentication failed for https://github.com/spicyapi.ai/skill.git`.
-- **`No well-known skills found; trying direct download...` is expected.** The address serves the
-  latest npm release of this package as a tarball, and `skills` finds the Skill inside it.
-- **It prints where it installed.** For example, a project install for Claude Code alone lands in
-  `.claude/skills/spicyapi`; choosing several agents keeps one copy in `.agents/skills/spicyapi` and
-  points the others at it; a global install goes to `~/.agents/skills/spicyapi` with a link in
-  `~/.claude/skills/spicyapi` for Claude Code.
+- **This installs the current `main`, not the latest npm release.** The two are usually the same
+  thing, and `main` is kept releasable for exactly this reason. If you need the published release
+  instead, use Option 2 below, which reads npm.
+- **Write the owner exactly as `Spicy-API`, with the hyphen.** `SpicyAPI` is a different account and
+  `skills` will fail to clone it.
+- **`Cloning repository…` then `Found 1 skill` is the whole of it.** The Skill lives at
+  `skills/spicyapi/` in this repository; nothing else here is installed.
+- **It prints where it installed.** A project install keeps the files in `.agents/skills/spicyapi`
+  and gives each chosen assistant its own copy or link — `.claude/skills/spicyapi` for Claude Code,
+  for instance. A global install goes to `~/.agents/skills/spicyapi` with a link in
+  `~/.claude/skills/spicyapi`.
 
 ### Option 2: this package's installer
 
@@ -237,9 +240,9 @@ cancellation API — a queued or running task has to finish before it can be pur
 
 Installed copies do not update themselves, and the installed directory carries no version number.
 
-- **Installed with `skills`:** run the same `npx skills add https://spicyapi.ai/skill …` command
-  again; it replaces the files with the latest release. Remove with `npx skills remove spicyapi`
-  (add `-g` for a global install).
+- **Installed with `skills`:** run the same `npx skills add Spicy-API/spicy-skill …` command
+  again; it replaces the files with whatever `main` holds at that moment. Remove with
+  `npx skills remove spicyapi` (add `-g` for a global install).
 - **Installed with this package:** reinstall over the same target, and delete the directory to
   remove it.
 
@@ -254,7 +257,8 @@ Removing the Skill does not affect your SpicyAPI account, keys or code the agent
 
 | Symptom                                                              | Fix                                                                                   |
 | -------------------------------------------------------------------- | ------------------------------------------------------------------------------------- |
-| `Authentication failed for https://github.com/spicyapi.ai/skill.git` | Include `https://`: `npx skills add https://spicyapi.ai/skill`                        |
+| `Repository not found` or an authentication prompt while cloning     | Check the owner spelling: it is `Spicy-API`, with the hyphen                          |
+| `No skills found for the scoped path '/skill'`                       | That is the retired address; install from the repository instead                      |
 | `The SpicyAPI Skill download is temporarily unavailable`             | Retry later, or use `npx @spicyapi/skill install`                                     |
 | `skill already exists at …`                                          | A directory is already there; if it is this Skill, reinstall with `--force` to update |
 | `refusing to replace …: it is not a SpicyAPI Skill directory`        | `--target` names a parent or unrelated directory; use the `…/spicyapi` path it prints |
