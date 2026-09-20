@@ -1,5 +1,18 @@
 # @spicyapi/skill
 
+## 0.3.4
+
+### Patch Changes
+
+- Install from the public repository: `npx skills add Spicy-API/spicy-skill`. The previous address,
+  `https://spicyapi.ai/skill`, stopped installing for everyone. The shared installer resolves a URL
+  that carries a path against a well-known index *at that path*, finds none, and exits instead of
+  falling back to a direct download, so it now reports
+  `No skills found for the scoped path '/skill'`. The README and the troubleshooting table follow
+  the repository route, and note that this installs the current `main` rather than the published
+  release — use `npx @spicyapi/skill install` for the npm release. The Skill's own instructions are
+  unchanged.
+
 ## 0.3.0
 
 ### Minor Changes
